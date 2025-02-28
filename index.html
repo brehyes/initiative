@@ -1,1 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initiative - D&D 5e Combat Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Initiative <span class="subtitle">D&D 5e Combat Tracker</span></h1>
+            <div class="header-controls">
+                <button id="new-encounter" class="btn primary"><i class="fas fa-plus"></i> New Encounter</button>
+                <button id="save-encounter" class="btn secondary"><i class="fas fa-save"></i> Save</button>
+                <button id="load-encounter" class="btn secondary"><i class="fas fa-folder-open"></i> Load</button>
+            </div>
+        </header>
 
+        <main>
+            <div class="combat-tracker">
+                <div class="initiative-list-container">
+                    <div class="round-info">
+                        <div class="round-count">Round: <span id="round-number">0</span></div>
+                        <button id="next-round" class="btn secondary" disabled><i class="fas fa-step-forward"></i> Next Round</button>
+                    </div>
+                    <div class="initiative-list" id="initiative-list">
+                        <!-- Initiative list will be populated by JavaScript -->
+                        <div class="empty-state">
+                            <i class="fas fa-dice-d20"></i>
+                            <p>Add combatants to begin tracking initiative</p>
+                        </div>
+                    </div>
+                    <div class="combat-controls">
+                        <button id="start-combat" class="btn primary" disabled><i class="fas fa-play"></i> Start Combat</button>
+                        <button id="next-turn" class="btn primary" disabled><i class="fas fa-arrow-right"></i> Next Turn</button>
+                        <button id="end-combat" class="btn secondary" disabled><i class="fas fa-stop"></i> End Combat</button>
+                    </div>
+                </div>
+
+                <div class="combatant-form-container">
+                    <h2>Add Combatant</h2>
+                    <form id="add-combatant-form">
+                        <div class="form-group">
+                            <label for="combatant-name">Name</label>
+                            <input type="text" id="combatant-name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="initiative-roll">Initiative</label>
+                                <input type="number" id="initiative-roll" min="1" value="10" required>
+                                <button type="button" id="roll-initiative" class="btn-icon" title="Roll initiative"><i class="fas fa-dice"></i></button>
+                            </div>
+                            <div class="form-group">
+                                <label for="combatant-hp">HP</label>
+                                <input type="number" id="combatant-hp" min="1" value="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="combatant-type">Type</label>
+                            <select id="combatant-type">
+                                <option value="player">Player</option>
+                                <option value="enemy">Enemy</option>
+                                <option value="ally">Ally NPC</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="combatant-ac">AC</label>
+                                <input type="number" id="combatant-ac" min="0" value="10">
+                            </div>
+                            <div class="form-group">
+                                <label for="combatant-init-bonus">Init. Bonus</label>
+                                <input type="number" id="combatant-init-bonus" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="combatant-notes">Notes</label>
+                            <textarea id="combatant-notes" rows="2"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn primary"><i class="fas fa-plus"></i> Add to Combat</button>
+                            <button type="reset" class="btn secondary"><i class="fas fa-undo"></i> Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <div id="active-combatant-details" class="active-combatant hidden">
+            <h3>Current Turn: <span id="active-name">None</span></h3>
+            <div class="detail-row">
+                <div class="detail-item">
+                    <span class="detail-label">HP:</span>
+                    <div class="hp-control">
+                        <button id="damage-btn" class="btn-small danger"><i class="fas fa-minus"></i></button>
+                        <span id="active-hp">0</span>/<span id="active-max-hp">0</span>
+                        <button id="heal-btn" class="btn-small success"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">AC:</span>
+                    <span id="active-ac">--</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Notes:</span>
+                    <span id="active-notes">None</span>
+                </div>
+            </div>
+            <div class="condition-tracking">
+                <h4>Conditions</h4>
+                <div class="condition-list" id="active-conditions">
+                    <!-- Conditions will be added here -->
+                </div>
+                <div class="add-condition">
+                    <select id="condition-select">
+                        <option value="">Add condition...</option>
+                        <option value="blinded">Blinded</option>
+                        <option value="charmed">Charmed</option>
+                        <option value="deafened">Deafened</option>
+                        <option value="frightened">Frightened</option>
+                        <option value="grappled">Grappled</option>
+                        <option value="incapacitated">Incapacitated</option>
+                        <option value="invisible">Invisible</option>
+                        <option value="paralyzed">Paralyzed</option>
+                        <option value="petrified">Petrified</option>
+                        <option value="poisoned">Poisoned</option>
+                        <option value="prone">Prone</option>
+                        <option value="restrained">Restrained</option>
+                        <option value="stunned">Stunned</option>
+                        <option value="unconscious">Unconscious</option>
+                    </select>
+                    <button id="add-condition-btn" class="btn-small"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Initiative Combat Tracker &copy; 2025 | <a href="https://github.com/brethyes/initiative" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <!-- Modal for damage/healing -->
+    <div id="hp-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="hp-modal-title">Apply Damage</h3>
+            <div class="form-group">
+                <label for="hp-amount">Amount</label>
+                <input type="number" id="hp-amount" min="0" value="1">
+            </div>
+            <button id="confirm-hp-change" class="btn primary">Apply</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
