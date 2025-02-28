@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
         activeCombatantIndex: -1,
         isInCombat: false,
         round: 0,
-        savedEncounters: []
+        savedEncounters: [],
+        turnHistory: [], // Store history of turns for backward navigation
+        currentHistoryIndex: -1 // Current position in the turn history
     };
 
     // DOM Elements
@@ -26,8 +28,30 @@ document.addEventListener('DOMContentLoaded', () => {
         combatantInitBonus: document.getElementById('combatant-init-bonus'),
         combatantNotes: document.getElementById('combatant-notes'),
         
+        // Spellcaster options
+        isSpellcaster: document.getElementById('is-spellcaster'),
+        spellcasterOptions: document.getElementById('spellcaster-options'),
+        spellSlotInputs: [1, 2, 3, 4, 5, 6, 7, 8, 9].map(level => 
+            document.getElementById(`spell-slot-${level}`)
+        ),
+        
+        // Limited-use feature options
+        hasLimitedUse: document.getElementById('has-limited-use'),
+        limitedUseOptions: document.getElementById('limited-use-options'),
+        limitedUseName: document.getElementById('limited-use-name'),
+        limitedUseCharges: document.getElementById('limited-use-charges'),
+        addLimitedUseBtn: document.getElementById('add-limited-use'),
+        limitedUseList: document.getElementById('limited-use-list'),
+        
+        // Legendary options
+        hasLegendary: document.getElementById('has-legendary'),
+        legendaryOptions: document.getElementById('legendary-options'),
+        legendaryActions: document.getElementById('legendary-actions'),
+        legendaryResistances: document.getElementById('legendary-resistances'),
+        
         // Combat controls
         startCombatBtn: document.getElementById('start-combat'),
+        prevTurnBtn: document.getElementById('prev-turn'),
         nextTurnBtn: document.getElementById('next-turn'),
         nextRoundBtn: document.getElementById('next-round'),
         endCombatBtn: document.getElementById('end-combat'),
@@ -37,28 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         activeName: document.getElementById('active-name'),
         activeHp: document.getElementById('active-hp'),
         activeMaxHp: document.getElementById('active-max-hp'),
-        activeAc: document.getElementById('active-ac'),
-        activeNotes: document.getElementById('active-notes'),
-        activeConditions: document.getElementById('active-conditions'),
-        
-        // HP controls
-        damageBtn: document.getElementById('damage-btn'),
-        healBtn: document.getElementById('heal-btn'),
-        hpModal: document.getElementById('hp-modal'),
-        hpModalTitle: document.getElementById('hp-modal-title'),
-        hpAmount: document.getElementById('hp-amount'),
-        confirmHpChangeBtn: document.getElementById('confirm-hp-change'),
-        closeModal: document.querySelector('.close-modal'),
-        
-        // Condition controls
-        conditionSelect: document.getElementById('condition-select'),
-        addConditionBtn: document.getElementById('add-condition-btn'),
-        
-        // Encounter management
-        newEncounterBtn: document.getElementById('new-encounter'),
-        saveEncounterBtn: document.getElementById('save-encounter'),
-        loadEncounterBtn: document.getElementById('load-encounter')
-    };
 
     // Initialize the application
     function init() {
