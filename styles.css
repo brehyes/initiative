@@ -470,6 +470,186 @@ button:disabled {
     cursor: pointer;
 }
 
+/* Additional Combat Features */
+.extended-options {
+    margin-top: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-corners);
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+}
+
+.extended-options h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-top: 1.15rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.spell-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.active-spell-slots {
+    margin-bottom: 1rem;
+}
+
+.spell-slot-level {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.small-input {
+    width: 3rem !important;
+    text-align: center;
+    padding: 0.25rem;
+}
+
+.counter-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.limited-use-container {
+    margin-bottom: 0.5rem;
+}
+
+.feature-list {
+    margin-top: 0.75rem;
+}
+
+.feature-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-corners);
+    margin-bottom: 0.5rem;
+    background-color: white;
+}
+
+.feature-name {
+    font-weight: 500;
+}
+
+.feature-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.legendary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.legendary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Action Economy */
+.action-economy {
+    margin: 1rem 0;
+}
+
+.action-economy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-corners);
+    background-color: white;
+}
+
+.toggle-checkbox {
+    width: 1.5rem !important;
+    height: 1.5rem;
+    margin-top: 0.3rem;
+}
+
+.special-resources {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-corners);
+    background-color: #f9f9f9;
+}
+
+.notes-item {
+    margin-top: 1rem;
+}
+
+/* Concentration specific styling */
+.condition-tag.concentration {
+    background-color: #b794f4;
+    color: white;
+}
+
+.concentrating-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: #b794f4;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 0.3rem;
+}
+
+/* Turn History */
+.turn-history {
+    margin-top: 1rem;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-corners);
+}
+
+.history-item {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item.current {
+    background-color: rgba(74, 44, 130, 0.1);
+    font-weight: 500;
+}
+
 /* Utility classes */
 .hidden {
     display: none;
