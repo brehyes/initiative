@@ -1,1 +1,476 @@
+/* Base Styles */
+:root {
+    --primary-color: #4a2c82;
+    --primary-dark: #331e59;
+    --primary-light: #6b4098;
+    --secondary-color: #2c7a7b;
+    --text-color: #333;
+    --text-light: #666;
+    --text-inverse: #fff;
+    --bg-color: #f8f9fa;
+    --border-color: #ddd;
+    --player-color: #4a6fa8;
+    --enemy-color: #c53030;
+    --ally-color: #38a169;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --round-corners: 0.3rem;
+}
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.6;
+}
+
+/* Layout */
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: var(--text-light);
+    margin-left: 0.5rem;
+}
+
+main {
+    flex: 1;
+    margin-bottom: 2rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Combat Tracker Layout */
+.combat-tracker {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .combat-tracker {
+        grid-template-columns: 3fr 2fr;
+    }
+}
+
+/* Initiative List */
+.initiative-list-container {
+    background-color: white;
+    border-radius: var(--round-corners);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.round-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.round-count {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.initiative-list {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 500px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-corners);
+}
+
+.combatant {
+    display: flex;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    position: relative;
+}
+
+.combatant:last-child {
+    border-bottom: none;
+}
+
+.combatant.active {
+    background-color: rgba(74, 44, 130, 0.1);
+    border-left: 4px solid var(--primary-color);
+}
+
+.combatant-initiative {
+    font-weight: bold;
+    min-width: 2.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.combatant-info {
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.combatant-name {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.combatant.player .combatant-name::before {
+    content: '';
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--player-color);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.combatant.enemy .combatant-name::before {
+    content: '';
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--enemy-color);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.combatant.ally .combatant-name::before {
+    content: '';
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--ally-color);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.combatant-status {
+    display: flex;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.combatant-hp {
+    margin-right: 1rem;
+}
+
+.combatant-actions {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.combat-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Add Combatant Form */
+.combatant-form-container {
+    background-color: white;
+    border-radius: var(--round-corners);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+}
+
+.combatant-form-container h2 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-corners);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+input[type="number"] {
+    width: calc(100% - 2.5rem);
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: var(--round-corners);
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+/* Active Combatant Details */
+.active-combatant {
+    background-color: white;
+    border-radius: var(--round-corners);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+.active-combatant h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.detail-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.detail-item {
+    min-width: 150px;
+}
+
+.detail-label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.hp-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.condition-tracking {
+    margin-top: 1rem;
+}
+
+.condition-tracking h4 {
+    margin-bottom: 0.5rem;
+}
+
+.condition-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    min-height: 2rem;
+}
+
+.condition-tag {
+    background-color: #f0f0f0;
+    border-radius: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.condition-tag button {
+    background: none;
+    border: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-left: 0.3rem;
+    opacity: 0.6;
+}
+
+.condition-tag button:hover {
+    opacity: 1;
+}
+
+.add-condition {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.add-condition select {
+    flex: 1;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--round-corners);
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn.secondary {
+    background-color: #e2e8f0;
+    color: var(--text-color);
+}
+
+.btn.secondary:hover {
+    background-color: #cbd5e0;
+}
+
+.btn.danger {
+    background-color: #c53030;
+    color: white;
+}
+
+.btn-small {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 0.2rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-small.danger {
+    background-color: #c53030;
+    color: white;
+}
+
+.btn-small.success {
+    background-color: #38a169;
+    color: white;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--round-corners);
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Utility classes */
+.hidden {
+    display: none;
+}
